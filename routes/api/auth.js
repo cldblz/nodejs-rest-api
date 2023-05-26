@@ -7,6 +7,8 @@ const {
   logout,
   getCurrent,
   updateAvatar,
+  verify,
+  resendVerify,
 } = require("../../controllers/auth");
 const { schemas } = require("../../models/user");
 const { validateBody, authenticate } = require("../../middlewares");
@@ -27,6 +29,10 @@ const upload = multer({
 const router = express.Router();
 
 router.post("/register", validateBody(schemas.registerSchema), register);
+
+router.get("/verify/:verificationToken", verify);
+
+router.post("/verify/", validateBody(schemas.emailSchema), resendVerify);
 
 router.post("/login", validateBody(schemas.loginSchema), login);
 
